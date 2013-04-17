@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"strings"
+	"time"
 )
 
 var host string
@@ -137,6 +138,7 @@ func main() {
 	for i := 0; i < nReader; i++ {
 		go reader(ch, rend)
 	}
+	start := time.Now()
 	for i := 0; i < nWriter; i++ {
 		go writer(fmt.Sprintf("key-%d", i), ch, wend)
 	}
@@ -147,4 +149,8 @@ func main() {
 		ch <- ""
 		<-rend
 	}
+	end := time.Now()
+	duration := end.Sub(start)
+	log.Println(duration)
+	log.Println(float64(nWriter*nCmd)/duration.Seconds(), "[cycle/sec]")
 }
