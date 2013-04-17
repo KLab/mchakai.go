@@ -23,7 +23,8 @@ func Init() {
 	flag.IntVar(&nReader, "reader", 1, "number of reader")
 	flag.IntVar(&nCmd, "cmd", 10000, "number of set command per writer")
 	flag.Parse()
-	host = flag.Arg(1)
+	host = flag.Arg(0)
+	log.Println(host, port, nWriter, nReader, nCmd)
 }
 
 type Client struct {
